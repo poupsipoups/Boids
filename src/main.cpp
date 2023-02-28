@@ -23,21 +23,18 @@ int main(int argc, char* argv[])
     float x = 0.0f;
     float y = 0.0f;
 
-    std::vector<glm::vec2> rectangles(100);
-    std::vector<int>       directions(100);
+    std::vector<glm::vec2> boids(100);
+    std::vector<float>     directions(100);
 
-    // initialisation des positions de rectangle
-    for (auto& rectangle : rectangles)
+    // initialisation des positions de boid
+    for (auto& boid : boids)
     {
         x = p6::random::number(-2, 2);
         y = p6::random::number(-1, 1);
 
-        rectangle = glm::vec2(x, y);
-    }
+        boid = glm::vec2(x, y);
 
-    for (auto& direction : directions)
-    {
-        direction = p6::random::number(0, 3);
+        directions.push_back(p6::random::number(-1, 1));
     }
 
     // Declare your infinite update loop.
@@ -49,28 +46,14 @@ int main(int argc, char* argv[])
 
         ctx.fill = {1.f, 0.7f, 0.2f};
 
-        for (int i = 0; i < 100; i++)
+        for (auto& boid : boids)
         {
-            if (directions[i] == 0)
-            {
-                rectangles[i].y += 0.01;
-            }
-            else if (directions[i] == 1)
-            {
-                rectangles[i].x += 0.01;
-            }
-            else if (directions[i] == 2)
-            {
-                rectangles[i].y -= 0.01;
-            }
-            else
-            {
-                rectangles[i].x -= 0.01;
-            }
+            boid.x += p6::random::number(-0.1, 0.1);
+            boid.y += p6::random::number(-0.1, 0.1);
 
-            ctx.square(
-                p6::Center{rectangles[i].x, rectangles[i].y},
-                p6::Radius{0.1f}
+            ctx.circle(
+                p6::Center{boid.x, boid.y},
+                p6::Radius{0.05f}
             );
         }
     };
