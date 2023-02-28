@@ -37,6 +37,8 @@ int main(int argc, char* argv[])
         directions.push_back(p6::random::number(-1, 1));
     }
 
+    const p6::Angle angle2 = 45_degrees;
+
     // Declare your infinite update loop.
     ctx.update = [&]() {
         // Clear the background with a fading effect
